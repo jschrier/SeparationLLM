@@ -1,0 +1,23 @@
+{
+	"test_gpt35.json":{
+		"dataset":"..\/results\/test_gpt35.json",
+		"accuracy":0.652694610778443,
+		"confusionMatrix":[[116,2,20,35,0,0],[2,22,17,1,0,0],[31,9,69,0,0,0],[22,2,3,91,7,0],[1,0,1,21,29,0]],
+		"n_correct":327,
+		"n_test":501
+	},
+	"test_llama3-8b.json":{
+		"dataset":"..\/results\/test_llama3-8b.json",
+		"accuracy":0.40718562874251485,
+		"confusionMatrix":[[138,35,0,0,0,0],[59,66,0,0,0,0],[87,22,0,0,0,0],[18,34,0,0,0,0],[34,8,0,0,0,0]],
+		"n_correct":204,
+		"n_test":501
+	},
+	"test_mistral7b.json":{
+		"dataset":"..\/results\/test_mistral7b.json",
+		"accuracy":0.4151696606786426,
+		"confusionMatrix":[[102,23,0,0,0,0],[67,106,0,0,0,0],[38,71,0,0,0,0],[47,5,0,0,0,0],[27,15,0,0,0,0]],
+		"n_correct":208,
+		"n_test":501
+	}
+}
