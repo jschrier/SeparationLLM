@@ -28,6 +28,8 @@
 
 - Trained on a single random 80/20% train/test split
 
+- We take the highest probability outcome (T=0) as the output, but also retrieve log-probs of all the possibilities (a nice trick we've used before!) So we can read out the presumed probabilities for each class.
+
 # Preliminary results
 
 - See `results/summary.json`:  Clear winner is GPT-3.5 (65% top-1 accuracy) compared to the other models (~ 41%), evaluated on 501 test items.  All are better than "guess the majority" class.
