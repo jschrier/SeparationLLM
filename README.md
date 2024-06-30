@@ -5,12 +5,13 @@
 # Data
 
  Source data was collected by L. Augustine in `data/Monoamide_Literature_Review.xlsx`.  
- 
+ - Retain only entries with a single metal species and single ligand, from the nitrate-containing spreadsheet (sheet 2)
+
  This is reprocessed into sentence format: *"0.5 M of CCCCCCN(CCCCCC)C(=O)CCCCC in toluene is used to extract 50 mM Th(IV) from an aqueous solution of 4 M HNO3 and 4 M nitrate at 20 C. The contact time is 10 min and the radiolytic dosage is 0 kGy"*
 
- System prompt: *You are an expert liquid-liquid extraction chemist. Use the provided experiment description to predict the extraction selectivity. Return only VL, L, U, M, H.*
+ All quantities are cast down to 1 significant figure.
 
- All quantities are cast down to 1 significant figure 
+ System prompt: *You are an expert liquid-liquid extraction chemist. Use the provided experiment description to predict the extraction selectivity. Return only VL, L, U, M, H.*
 
  The task is to predict the distribution coefficient:
  - (Very Low: VL) D <= 0.01  (about 10%)
@@ -19,7 +20,7 @@
  - (Moderate: M)   D < 10 (about 22%)
  - (High: H)   D >= 10 (about 8%)
 
-(These divisions are somewhat arbitrary. The labels are each a single token in common tokenizers, and having only 5 labels lets us return all log-probs for the responses, which is conevenient )
+(These divisions are somewhat arbitrary. The labels are each a single token in common tokenizers, and having only 5 labels lets us return all log-probs for the responses, which is convenient )
 
 
 # Models tested
