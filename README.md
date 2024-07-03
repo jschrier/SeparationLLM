@@ -33,8 +33,13 @@
 
 # Preliminary results
 
-- See `results/summary.json`:  Clear winner is GPT-3.5 (65% top-1 accuracy) compared to the other models (~ 41%), evaluated on 501 test items.  All are better than "guess the majority" class.
+![bar chart of results/summary.json accuracy](figures/prelim.jpg)
+
+- See `results/summary.json`:  Clear winner is GPT-3.5 (65% top-1 accuracy) compared to the other models (~41%), evaluated on 501 test items.  All are better than "guess the majority" class.
 - Mistral-7b is not so good at following instructions, and usually added a space and wrote `VL` as `V`, so we added a few manual fixes for this.
+- Ensembling doesn't help the top-1 accuracy. (i.e., if you add the predicted possibilites for the three models and take the argmax, you are sill at 65% accuracy)
+
+
 
 # Ideas for future work:
 
