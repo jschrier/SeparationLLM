@@ -10,7 +10,7 @@ keyWithLargestValue[x_Association] := First @ Keys @ TakeLargest[1] @ x
 stripSpacesFromKeys[x_Association]:= KeyMap[StringTrim]@ x
 
 (* Mistral-7B tends to respond "V" instead of "VL"*)
-replaceV[x_Association]:=KeyMap[Replace["V"->"VL"]]@ x
+replaceV[x_Association] := KeyMap[Replace["V"->"VL"]]@ x
 
 evaluatePrediction[example_Association, config_LLMConfiguration] := With[
 	{answer = Query["messages", 3, "content"] @ example, 
@@ -38,6 +38,6 @@ summarize[f_?FileExistsQ]:= With[
 			Query[All, "answer"]@d]},
 		<|"dataset" -> f,
 		"accuracy" -> measurements["Accuracy"],
-		"confusionMatrix"->measurements["ConfusionMatrix"],
+		"confusionMatrix" -> measurements["ConfusionMatrix"],
 		"n_correct" -> Total@ Boole@ Query[All, "correctQ"]@ d,
 		"n_test" -> Query[Length]@ d|>]]

@@ -5,7 +5,7 @@ singleExtractantQ[row_] := EqualTo[1.]@ row["No. of Extractants"]
 			
 singleMetalQ[row_] := EqualTo[1.]@ row["# of Metals"]
 
-numericDistributionCoeffQ[row_]:=NumericQ@ row["Distribution Coefficient"]
+numericDistributionCoeffQ[row_] := NumericQ@ row["Distribution Coefficient"]
 
 
 
@@ -28,18 +28,18 @@ formatRadiolyticDosage[x_] := "0 kGy" /; x == 0.0
 formatRadiolyticDosage[x_] := "<250 kGy" /; x <= 250
 formatRadiolyticDosage[x_] := ">250 kGy" /; x > 250
 
-(*TODO: consider scrambling the SMILES input for generalizability
-	https://resources.wolframcloud.com/FunctionRepository/resources/RandomSmilesString/ *)
-(* this is NOT implemented in our workflow  *)
 
-randomizeSMILES[x_String] := ResourceFunction["RandomSmilesString"]@ x
+(* augment structures by scrambling the SMILES input
+	https://resources.wolframcloud.com/FunctionRepository/resources/RandomSmilesString/ *)
+
+randomizeSMILES[x_String, n_:1] := ResourceFunction["RandomSmilesString"][x, n]
 
 
 (* convert a database row into a string description of the experiment *)
 	
 formatInput[row_Dataset]:= formatInput @ Normal @ row
 
-(* TODO: There is also a COMMENT column in the spreadsheet, and we could think about how to include this*)
+(* TODO: There is also a COMMENT column in the spreadsheet, and we could think about how to include this *)
 
 formatInput[row_Association] :=
   StringReplace[x:NumberString ~~ ". " :> x <> " "] @ 
@@ -61,7 +61,9 @@ formatOutput[x_?NumericQ] := Which[
     x < 10,"M",
     x >= 10,"H"]
 
-(* convert the row into a dictionary of text inputs and outputs; leave ligand key for cross-val*)
+
+(* convert the row into a dictionary of text inputs and outputs; leave ligand key for cross-val *)
+
 formatRow[row_] := <|
 	"ligand_smiles" -> row["SMILES"], 
 	"ligand_inchikey" -> Molecule[row["SMILES"]]["InChIKey"][[2]],
