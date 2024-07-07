@@ -11,9 +11,9 @@ test = importJSONL["../data/leave_one_out_test.jsonl"];
 
 (* evaluate Llama-3-8B fine tune *)
 config = LLMConfiguration[
- <|"Model"-> "openpipe:loo-llama3-8b",
-  "Temperature"->10^-6,
-  "LogProbs"->5|>];
+ <|"Model" -> "openpipe:loo-llama3-8b",
+  "Temperature" -> 10^-6,
+  "LogProbs" -> 5 |>];
 results = Map[ evaluatePrediction[#, config ]&, test];
 Export["../results/test_loo_llama3-8b.json", %];
 

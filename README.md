@@ -33,21 +33,29 @@
 
 # Preliminary results
 
+## Random test/train split (80/20)
+
 ![bar chart of results/summary.json accuracy](figures/prelim.jpg)
 
 - See `results/summary.json`:  Clear winner is GPT-3.5 (65% top-1 accuracy) compared to the other models (~41%), evaluated on 501 test items.  All are better than "guess the majority" class.
 - Mistral-7b is not so good at following instructions, and usually added a space and wrote `VL` as `V`, so we added a few manual fixes for this.
 - Ensembling doesn't help the top-1 accuracy. (i.e., if you add the predicted possibilites for the three models and take the argmax, you are sill at 65% accuracy)
 
+## Leave-one-extractant out
 
+Experiments in `04a_Leave-One-Extracnt-Out-CV.wls` and `04b_Evaluate_LOO_models.wls`; results in `results/test_loo*.json` ; hold out extractant PTNKBMIGCUULJJ with 143 examples as a representative case (roughly equal balance of different outcomes)
+
+![bar chart of results/summary.json accuracy](figures/loo_prelim.jpg)
+
+Conclusions:
+- GPT-3.5 continues to perform well; Llama-3-8B performance is about as good as guessing the majority class
+- Augmenting the SMILES by 5x in the training set does not seem to improve the prediction quality.
 
 # Ideas for future work:
 
-- Try augmenting the dataset by generating randomized SMILES implementations (this might help for extrapolation to new organics)
-
 - Investigate other performance measures:
     - Top-2 accuracy
-    - Hold-one-ligand-out cross validation
+    - Prediction distribution entropy as an indicator of reliability
 
 - Test [other fine-tune platforms and strategies](https://jschrier.github.io/blog/2024/06/29/LLM-Finetuning-Notes.html) 
 - Prompt engineering

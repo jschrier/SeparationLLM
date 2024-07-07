@@ -20,6 +20,34 @@
 		"n_correct":204,
 		"n_test":501
 	},
+	"test_loo_aug_gpt35.json":{
+		"dataset":"..\/results\/test_loo_aug_gpt35.json",
+		"accuracy":0.6293706293706294,
+		"confusionMatrix":[[18,1,9,0,0,0],[0,18,4,1,4,0],[12,2,18,3,0,0],[12,0,0,20,0,0],[0,5,0,0,16,0]],
+		"n_correct":90,
+		"n_test":143
+	},
+	"test_loo_aug_llama3-8b.json":{
+		"dataset":"..\/results\/test_loo_aug_llama3-8b.json",
+		"accuracy":0.26573426573426573,
+		"confusionMatrix":[[16,19,0,0,0,0],[4,22,1,0,0,0],[5,27,0,0,0,0],[14,14,0,0,0,0],[0,21,0,0,0,0]],
+		"n_correct":38,
+		"n_test":143
+	},
+	"test_loo_gpt35.json":{
+		"dataset":"..\/results\/test_loo_gpt35.json",
+		"accuracy":0.6503496503496503,
+		"confusionMatrix":[[28,3,4,0,0,0],[4,23,0,0,0,0],[5,1,22,0,0,0],[0,0,16,16,0,0],[0,17,0,0,4,0]],
+		"n_correct":93,
+		"n_test":143
+	},
+	"test_loo_llama3-8b.json":{
+		"dataset":"..\/results\/test_loo_llama3-8b.json",
+		"accuracy":0.24475524475524477,
+		"confusionMatrix":[[35,0,0,0,0,0],[27,0,0,0,0,0],[28,0,0,0,0,0],[32,0,0,0,0,0],[21,0,0,0,0,0]],
+		"n_correct":35,
+		"n_test":143
+	},
 	"test_mistral7b.json":{
 		"dataset":"..\/results\/test_mistral7b.json",
 		"accuracy":0.4151696606786426,
