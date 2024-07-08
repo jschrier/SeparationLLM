@@ -51,6 +51,14 @@ Conclusions:
 - GPT-3.5 continues to perform well; Llama-3-8B performance is about as good as guessing the majority class
 - Augmenting the SMILES by 5x in the training set does not seem to improve the prediction quality.
 
+## Does example order matter?
+
+**Hypothesis:**  Depending on how batch sizes are set up, if we present each of the augmented SMILES examples sequentially they might all be in the same batch, and this would cause the optimizer to focus on condition information rather than SMILES leading to poor performance of Llama-3-8B.  
+
+**Experiment:**  Shuffle the examples in the training set (`data/leaveone_out_augmented_openpipe_randomizedorder.jsonl`); retrain Llama-3-8B model ` openpipe:loo-aug-rand-llama3` and evaluate
+
+**Result:** This does appear to incease prediction accuracy from 26% (without shuffling) to 35% (with shuffling); still lower than GPT-3.5, but notable and something that we might keep in mind for future work.
+
 # Ideas for future work:
 
 - Investigate other performance measures:

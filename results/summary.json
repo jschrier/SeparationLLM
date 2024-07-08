@@ -34,6 +34,13 @@
 		"n_correct":38,
 		"n_test":143
 	},
+	"test_loo_aug_rand_llama3-8b.json":{
+		"dataset":"..\/results\/test_loo_aug_rand_llama3-8b.json",
+		"accuracy":0.34965034965034963,
+		"confusionMatrix":[[23,12,0,0,0,0],[6,18,3,0,0,0],[0,12,9,0,0,0],[23,5,0,0,0,0],[24,8,0,0,0,0]],
+		"n_correct":50,
+		"n_test":143
+	},
 	"test_loo_gpt35.json":{
 		"dataset":"..\/results\/test_loo_gpt35.json",
 		"accuracy":0.6503496503496503,

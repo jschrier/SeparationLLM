@@ -25,6 +25,16 @@ results = Map[ evaluatePrediction[#, config ]&, test];
 Export["../results/test_loo_aug_llama3-8b.json", %];
 
 
+(* evaluate Llama-3-8B model trained on randomized-order augmented SMILES *)
+config = LLMConfiguration[
+ <|"Model"-> "openpipe:loo-aug-rand-llama3",
+  "Temperature"->10^-6,
+  "LogProbs"->5|>];
+results = Map[ evaluatePrediction[#, config ]&, test];
+Export["../results/test_loo_aug_rand_llama3-8b.json", %];
+
+
+
 (* evaluate gpt-3-turbo-0125 fine tune *)
 config = LLMConfiguration[
  <|"Model"-> "openpipe:loo-gpt35",

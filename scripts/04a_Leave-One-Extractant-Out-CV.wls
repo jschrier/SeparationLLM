@@ -56,3 +56,14 @@ exportOpenPipeChatML["../data/leave_one_out_augmented_openpipe.jsonl", augTr, te
 
 
 (* other ideas:  augment the test data too... and use this to do uncertainty quantification of predictions *)
+
+
+(* experiment with shuffling the test items*)
+
+With[
+ {original = Import["../data/leave_one_out_augmented_openpipe.jsonl", "List"]},
+ Export[ "../data/leave_one_out_augmented_openpipe_randomizeorder.jsonl", #, "Text"]&@ 
+    RandomSample@original]
+
+
+
