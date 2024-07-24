@@ -29,7 +29,7 @@
 
 - Trained on a single random 80/20% train/test split
 
-- We take the highest probability outcome (T=0) as the output, but also retrieve log-probs of all the possibilities (a nice trick we've used before!) So we can read out the presumed probabilities for each class.
+- We take the highest probability outcome (`T=0`) as the output, but also retrieve log-probs of all the possibilities (a nice trick we've used before!) so we can read out the presumed probabilities for each class.
 
 # Preliminary results
 
@@ -55,7 +55,7 @@ Conclusions:
 
 **Hypothesis:**  Depending on how batch sizes are set up, if we present each of the augmented SMILES examples sequentially they might all be in the same batch, and this would cause the optimizer to focus on condition information rather than SMILES leading to poor performance of Llama-3-8B.  
 
-**Experiment:**  Shuffle the examples in the training set (`data/leaveone_out_augmented_openpipe_randomizedorder.jsonl`); retrain Llama-3-8B model ` openpipe:loo-aug-rand-llama3` and evaluate
+**Experiment:**  Shuffle the examples in the training set (`data/leaveone_out_augmented_openpipe_randomizedorder.jsonl`); retrain Llama-3-8B model `openpipe:loo-aug-rand-llama3` and evaluate
 
 **Result:** This does appear to increase prediction accuracy from 26% (without shuffling) to 35% (with shuffling); still lower than GPT-3.5, but notable and something that we might keep in mind for future work.  However, subsequent experiments with gpt-4o-mini finetuning did *not* show a similar improvement with this strategy
 
@@ -67,7 +67,7 @@ Conclusions:
 
 **Key advantage:** `gpt-4o-mini` fine tuning and inference only cost 1/3 the price of `gpt-3.5-turbo` (which is now deprecated...).  So this is much cheaper to perform for essentially the same or better performance. 
 
-**Observation:**  `gpt-4o-mini` prediction entropy (- \sum p_i log p_i ) tends to be lower; in other words it is less likely to assign a smear of probabilities across outcomes and more likely to concentrate the probabilities on particular predictions. (Results shown below are for the random train/test split, but comparable results for the LOO task as well.) I guess this is good, because it means that the model makes more specific predictions
+**Observation:**  `gpt-4o-mini` prediction entropy ($- \sum p_i log p_i$ ) tends to be lower; in other words it is less likely to assign a smear of probabilities across outcomes and more likely to concentrate the probabilities on particular predictions. (Results shown below are for the random train/test split, but comparable results for the LOO task as well.) I guess this is good, because it means that the model makes more specific predictions
 
 ![histogram of prediction entropy for the](figures/prediction_entropy_prelim.jpg)
 
@@ -81,8 +81,8 @@ Conclusions:
 
 - Prompt engineering?
 
-- In Context Learning:  Not completely straightforward to do this; even our small dataset has about 430k input tokens and 5 K output tokens, so this won't fit in context unless we use one of the Google models.  We would need to implement context caching to make this affordable.
+- **In Context Learning:**  Not completely straightforward to do this; even our small dataset has about 430k input tokens and 5 K output tokens, so this won't fit in context unless we use one of the Google models.  We would need to implement context caching to make this affordable.
 
-- Uncertainty quantification: 
+- **Uncertainty quantification:** 
     - [Lin et al 2022](https://arxiv.org/abs/2205.14334) --- Despite the authors advocacy of the verbalized probability method they introduce, they indirect logit method generalizes better out of domain (and the results plotted don't seem to be qualitatively different).  The core idea of the indirect logit method is that your training data consists of `Q: ... A:... True/False: ...` triples; you can use the logprobs on the final True/False output token to deduce a probability
     - [Farquhar et al 2024](https://dx.doi.org/10.1038/s41586-024-07421-0) seems like a nice idea, but I don't know how to formulate it for our task yet
