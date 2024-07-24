@@ -35,7 +35,7 @@
 
 ## Random test/train split (80/20)
 
-![bar chart of results/summary.json accuracy](figures/prelim.jpg)
+![bar chart of results/summary.json accuracy](figures/random_split_prelim.jpg)
 
 - See `results/summary.json`:  Clear winner is GPT-3.5 (65% top-1 accuracy) compared to the other models (~41%), evaluated on 501 test items.  All are better than "guess the majority" class.
 - Mistral-7b is not so good at following instructions, and usually added a space and wrote `VL` as `V`, so we added a few manual fixes for this.
@@ -57,7 +57,19 @@ Conclusions:
 
 **Experiment:**  Shuffle the examples in the training set (`data/leaveone_out_augmented_openpipe_randomizedorder.jsonl`); retrain Llama-3-8B model ` openpipe:loo-aug-rand-llama3` and evaluate
 
-**Result:** This does appear to incease prediction accuracy from 26% (without shuffling) to 35% (with shuffling); still lower than GPT-3.5, but notable and something that we might keep in mind for future work.
+**Result:** This does appear to increase prediction accuracy from 26% (without shuffling) to 35% (with shuffling); still lower than GPT-3.5, but notable and something that we might keep in mind for future work.  However, subsequent experiments with gpt-4o-mini finetuning did *not* show a similar improvement with this strategy
+
+**Actionable ideas:** Besides randomization, this also leads me to hypothesize that larger batch sizes are probably beneficial.
+
+## GPT-4o-mini fine-tuning
+
+(23 July 2024) `gpt-4o-mini-2024-07-18` fine-tuning was released, so we tested this and included the results in the above. (Just using default hyperparams.)  Performance is comparable to the previous`gpt-3.5-turbo-0125` fine tunes; perhaps slightly higher for the random train/test split, perhaps slightly lower (probably not meaningful) for Leave-one-extractant-out task
+
+**Key advantage:** `gpt-4o-mini` fine tuning and inference only cost 1/3 the price of `gpt-3.5-turbo` (which is now deprecated...).  So this is much cheaper to perform for essentially the same or better performance. 
+
+**Observation:**  `gpt-4o-mini` prediction entropy (- \sum p_i log p_i ) tends to be lower; in other words it is less likely to assign a smear of probabilities across outcomes and more likely to concentrate the probabilities on particular predictions. (Results shown below are for the random train/test split, but comparable results for the LOO task as well.) I guess this is good, because it means that the model makes more specific predictions
+
+![histogram of prediction entropy for the](figures/prediction_entropy_prelim.jpg)
 
 # Ideas for future work:
 
@@ -66,4 +78,11 @@ Conclusions:
     - Prediction distribution entropy as an indicator of reliability
 
 - Test [other fine-tune platforms and strategies](https://jschrier.github.io/blog/2024/06/29/LLM-Finetuning-Notes.html) 
-- Prompt engineering
+
+- Prompt engineering?
+
+- In Context Learning:  Not completely straightforward to do this; even our small dataset has about 430k input tokens and 5 K output tokens, so this won't fit in context unless we use one of the Google models.  We would need to implement context caching to make this affordable.
+
+- Uncertainty quantification: 
+    - [Lin et al 2022](https://arxiv.org/abs/2205.14334) --- Despite the authors advocacy of the verbalized probability method they introduce, they indirect logit method generalizes better out of domain (and the results plotted don't seem to be qualitatively different).  The core idea of the indirect logit method is that your training data consists of `Q: ... A:... True/False: ...` triples; you can use the logprobs on the final True/False output token to deduce a probability
+    - [Farquhar et al 2024](https://dx.doi.org/10.1038/s41586-024-07421-0) seems like a nice idea, but I don't know how to formulate it for our task yet

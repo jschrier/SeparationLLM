@@ -53,6 +53,24 @@ results = Map[ evaluatePrediction[#, config ]&, test];
 Export["../results/test_loo_aug_gpt35.json", %];
 
 
+(* evaluate gpt-4o-mini fine tune *)
+config = LLMConfiguration[
+ <|"Model"-> "openpipe:loo-gpt4omini",
+  "Temperature"->10^-6,
+  "LogProbs"->5|>];
+results = Map[ evaluatePrediction[#, config ]&, test];
+Export["../results/test_loo_gpt40mini.json", %];
+
+(* evaluate gpt-3-turbo-0125 fine tune *)
+config = LLMConfiguration[
+ <|"Model"-> "openpipe:loo-aug-rand-gpt4omini",
+  "Temperature"->10^-6,
+  "LogProbs"->5|>];
+ 
+results = Map[ evaluatePrediction[#, config ]&, test];
+Export["../results/test_loo_aug_rand_gpt40mini.json", %];
+
+
 (* summarize results *)
 Export["../results/summary.json", #, "Compact"->2]&@
 	FileSystemMap[summarize, "../results/", FileNameForms->"test_*.json"];

@@ -61,6 +61,16 @@ results = Map[ evaluatePrediction[#, config ]&, test];
 Export["../results/test_gpt35.json", %];
 
 
+(* evaluate gpt-4o-mini fine tune *)
+config = LLMConfiguration[
+ <|"Model"-> "openpipe:monoamide-gpt4omini",
+  "Temperature"->10^-6,
+  "LogProbs"->5|>];
+ 
+results = Map[ evaluatePrediction[#, config ]&, test];
+Export["../results/test_gpt40mini.json", %];
+
+
 (* summarize results *)
 Export["../results/summary.json", #, "Compact"->2]&@
 	FileSystemMap[summarize, "../results/", FileNameForms->"test_*.json"];

@@ -6,16 +6,23 @@
 		"n_correct":327,
 		"n_test":501
 	},
+	"test_gpt40mini.json":{
+		"dataset":"..\/results\/test_gpt40mini.json",
+		"accuracy":0.6786427145708581,
+		"confusionMatrix":[[112,4,8,1,0,0],[0,71,21,17,0,0],[28,19,126,0,0,0],[2,10,2,28,0,0],[47,0,2,0,3,0]],
+		"n_correct":340,
+		"n_test":501
+	},
 	"test_llama3-70b.json":{
 		"dataset":"..\/results\/test_llama3-70b.json",
-		"accuracy":0.3672654690618761,
+		"accuracy":0.3672654690618762,
 		"confusionMatrix":[[148,25,0,0,0,0],[89,36,0,0,0,0],[104,5,0,0,0,0],[25,27,0,0,0,0],[38,4,0,0,0,0]],
 		"n_correct":184,
 		"n_test":501
 	},
 	"test_llama3-8b.json":{
 		"dataset":"..\/results\/test_llama3-8b.json",
-		"accuracy":0.40718562874251485,
+		"accuracy":0.4071856287425149,
 		"confusionMatrix":[[138,35,0,0,0,0],[59,66,0,0,0,0],[87,22,0,0,0,0],[18,34,0,0,0,0],[34,8,0,0,0,0]],
 		"n_correct":204,
 		"n_test":501
@@ -34,6 +41,13 @@
 		"n_correct":38,
 		"n_test":143
 	},
+	"test_loo_aug_rand_gpt40mini.json":{
+		"dataset":"..\/results\/test_loo_aug_rand_gpt40mini.json",
+		"accuracy":0.6013986013986014,
+		"confusionMatrix":[[23,8,4,0,0,0,0],[2,25,0,0,0,0,0],[14,0,14,0,0,0,0],[2,0,9,21,0,0,0],[0,16,0,0,3,2,0],[0,0,0,0,0,0,0]],
+		"n_correct":86,
+		"n_test":143
+	},
 	"test_loo_aug_rand_llama3-8b.json":{
 		"dataset":"..\/results\/test_loo_aug_rand_llama3-8b.json",
 		"accuracy":0.34965034965034963,
@@ -48,6 +62,13 @@
 		"n_correct":93,
 		"n_test":143
 	},
+	"test_loo_gpt40mini.json":{
+		"dataset":"..\/results\/test_loo_gpt40mini.json",
+		"accuracy":0.6363636363636364,
+		"confusionMatrix":[[20,11,4,0,0,0],[1,25,0,0,1,0],[4,1,23,0,0,0],[0,0,11,21,0,0],[0,19,0,0,2,0]],
+		"n_correct":91,
+		"n_test":143
+	},
 	"test_loo_llama3-8b.json":{
 		"dataset":"..\/results\/test_loo_llama3-8b.json",
 		"accuracy":0.24475524475524477,
@@ -57,14 +78,14 @@
 	},
 	"test_mistral7b.json":{
 		"dataset":"..\/results\/test_mistral7b.json",
-		"accuracy":0.4151696606786426,
+		"accuracy":0.41516966067864264,
 		"confusionMatrix":[[102,23,0,0,0,0],[67,106,0,0,0,0],[38,71,0,0,0,0],[47,5,0,0,0,0],[27,15,0,0,0,0]],
 		"n_correct":208,
 		"n_test":501
 	},
 	"test_mistral8x7b.json":{
 		"dataset":"..\/results\/test_mistral8x7b.json",
-		"accuracy":0.2514970059880239,
+		"accuracy":0.25149700598802394,
 		"confusionMatrix":[[116,9,0,0,0,0],[163,10,0,0,0,0],[104,5,0,0,0,0],[52,0,0,0,0,0],[41,1,0,0,0,0]],
 		"n_correct":126,
 		"n_test":501
