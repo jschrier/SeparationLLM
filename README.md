@@ -69,12 +69,19 @@ Conclusions:
 
 **Observation:**  `gpt-4o-mini` prediction entropy ($- \sum p_i log p_i$ ) tends to be lower; in other words it is less likely to assign a smear of probabilities across outcomes and more likely to concentrate the probabilities on particular predictions. (Results shown below are for the random train/test split, but comparable results for the LOO task as well.) I guess this is good, because it means that the model makes more specific predictions
 
-![histogram of prediction entropy for the](figures/prediction_entropy_prelim.jpg)
+![histogram of prediction entropy for the random train/test split, comparing gpt-3.5-turbo and gpt-4o-mini fine tunes](figures/prediction_entropy_prelim.jpg)
+
+
+We can also consider this in terms of the [perplexity](https://en.wikipedia.org/wiki/Perplexity); the conclusion is the same: much higher quality (in terms of uncertainty) predictions:
+
+![histogram of prediction perplexity for the random train/test split, comparing gpt-3.5-turbo and gpt-4o-mini fine tunes](figures/prediction_perplexity_prelim.jpg)
+
+(for comparison, overally perplexity of the underlying distribution is ~4.3, so both are much better than just rolling the dice)
 
 # Ideas for future work:
 
 - Investigate other performance measures:
-    - Top-2 accuracy
+    - Top-2 accuracy?
     - Prediction distribution entropy as an indicator of reliability
 
 - Test [other fine-tune platforms and strategies](https://jschrier.github.io/blog/2024/06/29/LLM-Finetuning-Notes.html) 
@@ -85,4 +92,6 @@ Conclusions:
 
 - **Uncertainty quantification:** 
     - [Lin et al 2022](https://arxiv.org/abs/2205.14334) --- Despite the authors advocacy of the verbalized probability method they introduce, they indirect logit method generalizes better out of domain (and the results plotted don't seem to be qualitatively different).  The core idea of the indirect logit method is that your training data consists of `Q: ... A:... True/False: ...` triples; you can use the logprobs on the final True/False output token to deduce a probability
+        - But...we are already doing this because we are looking at the logits for the multiple choice answers.  You only need methods like the one they propose if you are outputing more complex results (say a number or a sentence)
     - [Farquhar et al 2024](https://dx.doi.org/10.1038/s41586-024-07421-0) seems like a nice idea, but I don't know how to formulate it for our task yet
+    - [June 2024 review on confidence estimation and calibration of LLMs](https://aclanthology.org/2024.naacl-long.366/) 
