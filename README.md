@@ -25,7 +25,7 @@
 
 # Models tested
 
-- Fine-tuned `llama-3-8b`, `mistral-7b`, and `gpt-3-turbo-0125` using [OpenPipe](http://openpipe.ai); you can't set hyperparameters, so they're the defaults...
+- Fine-tuned `llama-3-8b`, `mistral-7b`, and `gpt-3-turbo-0125` and `gpt-4o-mini-2024-07-18` using [OpenPipe](http://openpipe.ai); you can't set hyperparameters, so they're the defaults...
 
 - Trained on a single random 80/20% train/test split
 
@@ -37,7 +37,7 @@
 
 ![bar chart of results/summary.json accuracy](figures/random_split_prelim.jpg)
 
-- See `results/summary.json`:  Clear winner is GPT-3.5 (65% top-1 accuracy) compared to the other models (~41%), evaluated on 501 test items.  All are better than "guess the majority" class.
+- See `results/summary.json`:  Clear winner is GPT-4o-mini (65% top-1 accuracy), closely followed by GPT-3.5, compared to the other models (~41%), evaluated on 501 test items.  All are better than "guess the majority" class.
 - Mistral-7b is not so good at following instructions, and usually added a space and wrote `VL` as `V`, so we added a few manual fixes for this.
 - Ensembling doesn't help the top-1 accuracy. (i.e., if you add the predicted possibilites for the three models and take the argmax, you are sill at 65% accuracy)
 
@@ -48,7 +48,7 @@ Experiments in `04a_Leave-One-Extracnt-Out-CV.wls` and `04b_Evaluate_LOO_models.
 ![bar chart of results/summary.json accuracy](figures/loo_prelim.jpg)
 
 Conclusions:
-- GPT-3.5 continues to perform well; Llama-3-8B performance is about as good as guessing the majority class
+- GPT-4o-mini and GPT-3.5 continue to perform well; Llama-3-8B performance is about as good as guessing the majority class
 - Augmenting the SMILES by 5x in the training set does not seem to improve the prediction quality.
 
 ## Does example order matter?
@@ -90,8 +90,11 @@ We can also consider this in terms of the [perplexity](https://en.wikipedia.org/
 
 - **In Context Learning:**  Not completely straightforward to do this; even our small dataset has about 430k input tokens and 5 K output tokens, so this won't fit in context unless we use one of the Google models.  We would need to implement context caching to make this affordable.
 
+- Customized fine-tuning
+    - These are all using pretty generic loss functions for the fine-tuning process, but we could try to use a more specialized custom loss function (related to the "distance" between different predictions) to try to improve things. Not clear how well this would work.
+
 - **Uncertainty quantification:** 
     - [Lin et al 2022](https://arxiv.org/abs/2205.14334) --- Despite the authors advocacy of the verbalized probability method they introduce, they indirect logit method generalizes better out of domain (and the results plotted don't seem to be qualitatively different).  The core idea of the indirect logit method is that your training data consists of `Q: ... A:... True/False: ...` triples; you can use the logprobs on the final True/False output token to deduce a probability
         - But...we are already doing this because we are looking at the logits for the multiple choice answers.  You only need methods like the one they propose if you are outputing more complex results (say a number or a sentence)
-    - [Farquhar et al 2024](https://dx.doi.org/10.1038/s41586-024-07421-0) seems like a nice idea, but I don't know how to formulate it for our task yet
+    - [Farquhar et al 2024](https://dx.doi.org/10.1038/s41586-024-07421-0) seems like a nice idea, but I don't know how to formulate it for our task yet.  I've [written a tutorial on the method](https://jschrier.github.io/blog/2024/07/31/Detecting-LLM-confabulations-with-semantic-entropy.html).  After thinking about this, it does'nt really apply to our problem
     - [June 2024 review on confidence estimation and calibration of LLMs](https://aclanthology.org/2024.naacl-long.366/) 
