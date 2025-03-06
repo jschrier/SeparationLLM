@@ -4,7 +4,7 @@
 
 # Data
 
- Source data was collected by L. Augustine in `data/Monoamide_Literature_Review.xlsx`.  
+ Source data was collected by L. Augustine in `data/Monoamide_Literature_Review.xlsx`. (This was published in  “Advancing Spent Nuclear Fuel Reprocessing through Machine-Learning and Robotic Automation” (LA-UR-24-22395), *ACS Sustainable Chemistry & Engineering* **12**, 16692-16699 (2024) [doi:10.1021/acssuschemeng.4c06166](https://dx.doi.org/10.1021/acssuschemeng.4c06166) and is copied here for convenience only.)  
  - Retain only entries with a single metal species and single ligand, from the nitrate-containing spreadsheet (sheet 2)
 
  This is reprocessed into sentence format: *"0.5 M of CCCCCCN(CCCCCC)C(=O)CCCCC in toluene is used to extract 50 mM Th(IV) from an aqueous solution of 4 M HNO3 and 4 M nitrate at 20 C. The contact time is 10 min and the radiolytic dosage is 0 kGy"*
@@ -25,7 +25,7 @@
 
 # Models tested
 
-- Fine-tuned `llama-3-8b`, `mistral-7b`, and `gpt-3-turbo-0125` and `gpt-4o-mini-2024-07-18` using [OpenPipe](http://openpipe.ai); you can't set hyperparameters, so they're the defaults...
+- Fine-tuned `llama-3-8b`, `mistral-7b`, and `gpt-3-turbo-0125` and `gpt-4o-mini-2024-07-18` using [OpenPipe](http://openpipe.ai); you couldn't set hyperparameters when we ran this during Summer 2024, so they're the defaults...
 
 - Trained on a single random 80/20% train/test split
 
@@ -96,5 +96,6 @@ We can also consider this in terms of the [perplexity](https://en.wikipedia.org/
 - **Uncertainty quantification:** 
     - [Lin et al 2022](https://arxiv.org/abs/2205.14334) --- Despite the authors advocacy of the verbalized probability method they introduce, they indirect logit method generalizes better out of domain (and the results plotted don't seem to be qualitatively different).  The core idea of the indirect logit method is that your training data consists of `Q: ... A:... True/False: ...` triples; you can use the logprobs on the final True/False output token to deduce a probability
         - But...we are already doing this because we are looking at the logits for the multiple choice answers.  You only need methods like the one they propose if you are outputing more complex results (say a number or a sentence)
-    - [Farquhar et al 2024](https://dx.doi.org/10.1038/s41586-024-07421-0) seems like a nice idea, but I don't know how to formulate it for our task yet.  I've [written a tutorial on the method](https://jschrier.github.io/blog/2024/07/31/Detecting-LLM-confabulations-with-semantic-entropy.html).  After thinking about this, it doesn't really apply to our problem
-    - [June 2024 review on confidence estimation and calibration of LLMs](https://aclanthology.org/2024.naacl-long.366/) 
+    - [Farquhar et al 2024](https://dx.doi.org/10.1038/s41586-024-07421-0) seems like a nice idea, but I don't know how to formulate it for our task yet.  I've [written a tutorial on their semantic entropy method](https://jschrier.github.io/blog/2024/07/31/Detecting-LLM-confabulations-with-semantic-entropy.html).  After thinking about this, it doesn't really apply to our problem
+    - [June 2024 review on confidence estimation and calibration of LLMs](https://aclanthology.org/2024.naacl-long.366/)
+    - We've [also described other approaches for explanation of LLM models with self-calibration and consistency checking](https://jschrier.github.io/blog/2024/08/19/Assessing-an-LLM's-confidence-in-its-own-explanations.html) 
